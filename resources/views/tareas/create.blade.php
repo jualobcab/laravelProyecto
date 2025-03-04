@@ -1,10 +1,8 @@
 @extends('layouts.app')
-
 @section('content')
-    <h1>Crear Nueva Tarea</h1>
-
+    <h1 class="text-2xl font-bold mb-4">Crear Nueva Tarea</h1>
     @if ($errors->any())
-        <div>
+        <div class="bg-red-100 text-red-700 p-3 mb-4 rounded">
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -12,21 +10,12 @@
             </ul>
         </div>
     @endif
-
-    <form action="{{ route('tareas.store') }}" method="POST">
+    <form action="{{ route('tareas.store') }}" method="POST" class="space-y-4">
         @csrf
-        <label>Nombre de la tarea:</label>
-        <input type="text" name="nombre_tarea" required>
-
-        <label>Descripción:</label>
-        <textarea name="descripcion"></textarea>
-
-        <label>Fecha de finalización:</label>
-        <input type="date" name="fecha_fin">
-
-        <button type="submit">Guardar</button>
+        <input type="text" name="nombre_tarea" placeholder="Nombre de la tarea" class="w-full p-2 border rounded">
+        <textarea name="descripcion" placeholder="Descripción" class="w-full p-2 border rounded"></textarea>
+        <input type="date" name="fecha_fin" class="w-full p-2 border rounded">
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Guardar</button>
     </form>
-
-    <a href="{{ route('tareas.index') }}">Volver</a>
+    <a href="{{ route('tareas.index') }}" class="text-blue-500">Volver</a>
 @endsection
-`
