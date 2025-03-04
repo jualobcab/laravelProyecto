@@ -22,8 +22,24 @@ class TareaController extends Controller
     {
         $request->validate([
             'nombre_tarea' => 'required|max:255',
-            'descripcion' => 'nullable',
-            'fecha_fin' => 'nullable|date',
+            'descripcion' => 'required',
+            'estado' => 'required|in:pendiente,en_progreso,completada',
+            'fecha_fin' => [
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($request->estado === 'completada' && is_null($value)) {
+                        $fail('La fecha de finalización es obligatoria cuando la tarea está completada.');
+                    }
+                    if (in_array($request->estado, ['pendiente', 'en_progreso']) && !is_null($value)) {
+                        $fail('La fecha de finalización debe ser nula si la tarea no está completada.');
+                    }
+                },
+            ],
+            ], [
+                'nombre_tarea.required' => 'El nombre de la tarea es obligatorio.',
+                'nombre_tarea.max' => 'El nombre de la tarea no puede exceder los 255 caracteres.',
+                'descripcion.required' => 'La descripción puede estar vacía, pero debe ser un texto válido.',
+                'estado.required' => 'El estado de la tarea es obligatorio.',
+                'estado.in' => 'El estado debe ser "pendiente", "en_progreso" o "completada".',
         ]);
 
         Tarea::create($request->all());
@@ -44,8 +60,24 @@ class TareaController extends Controller
     {
         $request->validate([
             'nombre_tarea' => 'required|max:255',
-            'descripcion' => 'nullable',
-            'fecha_fin' => 'nullable|date',
+            'descripcion' => 'required',
+            'estado' => 'required|in:pendiente,en_progreso,completada',
+            'fecha_fin' => [
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($request->estado === 'completada' && is_null($value)) {
+                        $fail('La fecha de finalización es obligatoria cuando la tarea está completada.');
+                    }
+                    if (in_array($request->estado, ['pendiente', 'en_progreso']) && !is_null($value)) {
+                        $fail('La fecha de finalización debe ser nula si la tarea no está completada.');
+                    }
+                },
+            ],
+            ], [
+                'nombre_tarea.required' => 'El nombre de la tarea es obligatorio.',
+                'nombre_tarea.max' => 'El nombre de la tarea no puede exceder los 255 caracteres.',
+                'descripcion.required' => 'La descripción puede estar vacía, pero debe ser un texto válido.',
+                'estado.required' => 'El estado de la tarea es obligatorio.',
+                'estado.in' => 'El estado debe ser "pendiente", "en_progreso" o "completada".',
         ]);
 
         $tarea->update($request->all());
