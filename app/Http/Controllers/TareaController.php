@@ -43,6 +43,7 @@ class TareaController extends Controller
         ]);
 
         Tarea::create($request->all());
+        session()->flash('success', 'Tarea creada exitosamente.');
         return redirect()->route('tareas.index')->with('success', 'Tarea creada exitosamente.');
     }
 
@@ -81,12 +82,14 @@ class TareaController extends Controller
         ]);
 
         $tarea->update($request->all());
+        session()->flash('success', 'Tarea actualizada correctamente.');
         return redirect()->route('tareas.index')->with('success', 'Tarea actualizada.');
     }
 
     public function destroy(Tarea $tarea)
     {
         $tarea->delete();
+        session()->flash('success', 'Tarea eliminada exitosamente.');
         return redirect()->route('tareas.index')->with('success', 'Tarea eliminada.');
     }
 

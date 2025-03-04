@@ -16,5 +16,29 @@
     <div class="container mx-auto mt-6 p-4 bg-white shadow-lg rounded-lg">
         @yield('content')
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Para los mensajes en sesion -->
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                title: '¡Éxito!',
+                text: '{{ session("success") }}',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            });
+        </script>
+    @endif
+    @if(session('error'))
+        <script>
+            Swal.fire({
+                title: 'Error',
+                text: '{{ session("error") }}',
+                icon: 'error',
+                confirmButtonText: 'Entendido'
+            });
+        </script>
+    @endif
 </body>
 </html>

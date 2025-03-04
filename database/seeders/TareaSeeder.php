@@ -9,6 +9,6 @@ class TareaSeeder extends Seeder
 {
     public function run()
     {
-        Tarea::factory(10)->create();
+        Tarea::factory(5)->create();
     }
 }
